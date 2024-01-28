@@ -16,7 +16,7 @@
           :move="movePrev"
           :disabled="!prevItemsEnabled"
         >
-          <BaseIcon name="ChevronLeft" width="22px" height="24px" />
+          <BaseIcon :name="headerPrevButtonIcon" width="22px" height="24px" />
         </CalendarSlot>
       </button>
       <!--Mode switch button-->
@@ -41,7 +41,7 @@
           :move="moveNext"
           :disabled="!nextItemsEnabled"
         >
-          <BaseIcon name="ChevronRight" width="22px" height="24px" />
+          <BaseIcon :name="headerNextButtonIcon" width="22px" height="24px" />
         </CalendarSlot>
       </button>
     </div>
@@ -77,7 +77,7 @@ import CalendarSlot from './CalendarSlot.vue';
 
 export type IQuerySelector = Pick<HTMLElement, 'querySelector'>;
 
-const { masks, move } = useCalendar();
+const { masks, move, locale } = useCalendar();
 const { page, getMonthItems, getYearItems } = usePage();
 
 const monthMode = ref(true);
@@ -86,6 +86,28 @@ const yearGroupCount = 12;
 const selectedYear = ref(page.value.year);
 const selectedYearGroup = ref(getYearGroupIndex(page.value.year));
 const navContainer = ref<IQuerySelector | null>(null);
+
+const headerNextButtonIcon = computed(() => {
+  switch (locale.value.id) {
+    case 'he':
+      return 'ChevronLeft';
+    case 'ar':
+      return 'ChevronLeft';
+    default:
+      return 'ChevronRight';
+  }
+});
+
+const headerPrevButtonIcon = computed(() => {
+  switch (locale.value.id) {
+    case 'he':
+      return 'ChevronRight';
+    case 'ar':
+      return 'ChevronRight';
+    default:
+      return 'ChevronLeft';
+  }
+});
 
 function focusFirstItem() {
   // Use setTimeout instead of $nextTick so it plays nice with popperjs

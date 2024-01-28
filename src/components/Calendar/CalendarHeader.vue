@@ -13,7 +13,7 @@
       @keydown.space.enter="movePrev"
     >
       <CalendarSlot name="header-prev-button" :disabled="!canMovePrev">
-        <BaseIcon name="ChevronLeft" size="24" />
+        <BaseIcon :name="headerPrevButtonIcon" size="24" />
       </CalendarSlot>
     </button>
     <div v-if="show.title" class="vc-title-wrapper">
@@ -34,7 +34,7 @@
       @keydown.space.enter="moveNext"
     >
       <CalendarSlot name="header-next-button" :disabled="!canMoveNext">
-        <BaseIcon name="ChevronRight" size="24" />
+        <BaseIcon :name="headerNextButtonIcon" size="24"/>
       </CalendarSlot>
     </button>
   </div>
@@ -65,6 +65,7 @@ const {
   movePrev,
   canMoveNext,
   moveNext,
+  locale
 } = useCalendar();
 
 const navPlacement = computed(() => {
@@ -77,6 +78,29 @@ const navPlacement = computed(() => {
       return 'bottom';
   }
 });
+
+const headerNextButtonIcon = computed(() => {
+  switch (locale.value.id) {
+    case 'he':
+      return 'ChevronLeft';
+    case 'ar':
+      return 'ChevronLeft';
+    default:
+      return 'ChevronRight';
+  }
+});
+
+const headerPrevButtonIcon = computed(() => {
+  switch (locale.value.id) {
+    case 'he':
+      return 'ChevronRight';
+    case 'ar':
+      return 'ChevronRight';
+    default:
+      return 'ChevronLeft';
+  }
+});
+
 const navPopoverOptions = computed(() => {
   const { page } = props;
   return {

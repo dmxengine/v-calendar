@@ -6261,7 +6261,8 @@ const _sfc_main$b = /* @__PURE__ */ vue.defineComponent({
       canMovePrev,
       movePrev,
       canMoveNext,
-      moveNext
+      moveNext,
+      locale
     } = useCalendar();
     const navPlacement = vue.computed(() => {
       switch (props.page.titlePosition) {
@@ -6271,6 +6272,26 @@ const _sfc_main$b = /* @__PURE__ */ vue.defineComponent({
           return "bottom-end";
         default:
           return "bottom";
+      }
+    });
+    const headerNextButtonIcon = vue.computed(() => {
+      switch (locale.value.id) {
+        case "he":
+          return "ChevronLeft";
+        case "ar":
+          return "ChevronLeft";
+        default:
+          return "ChevronRight";
+      }
+    });
+    const headerPrevButtonIcon = vue.computed(() => {
+      switch (locale.value.id) {
+        case "he":
+          return "ChevronRight";
+        case "ar":
+          return "ChevronRight";
+        default:
+          return "ChevronLeft";
       }
     });
     const navPopoverOptions = vue.computed(() => {
@@ -6343,9 +6364,9 @@ const _sfc_main$b = /* @__PURE__ */ vue.defineComponent({
           }, {
             default: vue.withCtx(() => [
               vue.createVNode(_sfc_main$c, {
-                name: "ChevronLeft",
+                name: vue.unref(headerPrevButtonIcon),
                 size: "24"
-              })
+              }, null, 8, ["name"])
             ]),
             _: 1
           }, 8, ["disabled"])
@@ -6389,9 +6410,9 @@ const _sfc_main$b = /* @__PURE__ */ vue.defineComponent({
           }, {
             default: vue.withCtx(() => [
               vue.createVNode(_sfc_main$c, {
-                name: "ChevronRight",
+                name: vue.unref(headerNextButtonIcon),
                 size: "24"
-              })
+              }, null, 8, ["name"])
             ]),
             _: 1
           }, 8, ["disabled"])
@@ -6463,13 +6484,33 @@ const _hoisted_5$2 = ["data-id", "aria-label", "disabled", "onClick", "onKeydown
 const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
   __name: "CalendarNav",
   setup(__props) {
-    const { masks: masks2, move } = useCalendar();
+    const { masks: masks2, move, locale } = useCalendar();
     const { page, getMonthItems, getYearItems } = usePage();
     const monthMode = vue.ref(true);
     const yearGroupCount = 12;
     const selectedYear = vue.ref(page.value.year);
     const selectedYearGroup = vue.ref(getYearGroupIndex(page.value.year));
     const navContainer = vue.ref(null);
+    const headerNextButtonIcon = vue.computed(() => {
+      switch (locale.value.id) {
+        case "he":
+          return "ChevronLeft";
+        case "ar":
+          return "ChevronLeft";
+        default:
+          return "ChevronRight";
+      }
+    });
+    const headerPrevButtonIcon = vue.computed(() => {
+      switch (locale.value.id) {
+        case "he":
+          return "ChevronRight";
+        case "ar":
+          return "ChevronRight";
+        default:
+          return "ChevronLeft";
+      }
+    });
     function focusFirstItem() {
       setTimeout(() => {
         if (navContainer.value == null)
@@ -6620,10 +6661,10 @@ const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
             }, {
               default: vue.withCtx(() => [
                 vue.createVNode(_sfc_main$c, {
-                  name: "ChevronLeft",
+                  name: vue.unref(headerPrevButtonIcon),
                   width: "22px",
                   height: "24px"
-                })
+                }, null, 8, ["name"])
               ]),
               _: 1
             }, 8, ["disabled"])
@@ -6648,10 +6689,10 @@ const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
             }, {
               default: vue.withCtx(() => [
                 vue.createVNode(_sfc_main$c, {
-                  name: "ChevronRight",
+                  name: vue.unref(headerNextButtonIcon),
                   width: "22px",
                   height: "24px"
-                })
+                }, null, 8, ["name"])
               ]),
               _: 1
             }, 8, ["disabled"])

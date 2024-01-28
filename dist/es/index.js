@@ -6259,7 +6259,8 @@ const _sfc_main$b = /* @__PURE__ */ defineComponent({
       canMovePrev,
       movePrev,
       canMoveNext,
-      moveNext
+      moveNext,
+      locale
     } = useCalendar();
     const navPlacement = computed(() => {
       switch (props.page.titlePosition) {
@@ -6269,6 +6270,26 @@ const _sfc_main$b = /* @__PURE__ */ defineComponent({
           return "bottom-end";
         default:
           return "bottom";
+      }
+    });
+    const headerNextButtonIcon = computed(() => {
+      switch (locale.value.id) {
+        case "he":
+          return "ChevronLeft";
+        case "ar":
+          return "ChevronLeft";
+        default:
+          return "ChevronRight";
+      }
+    });
+    const headerPrevButtonIcon = computed(() => {
+      switch (locale.value.id) {
+        case "he":
+          return "ChevronRight";
+        case "ar":
+          return "ChevronRight";
+        default:
+          return "ChevronLeft";
       }
     });
     const navPopoverOptions = computed(() => {
@@ -6341,9 +6362,9 @@ const _sfc_main$b = /* @__PURE__ */ defineComponent({
           }, {
             default: withCtx(() => [
               createVNode(_sfc_main$c, {
-                name: "ChevronLeft",
+                name: unref(headerPrevButtonIcon),
                 size: "24"
-              })
+              }, null, 8, ["name"])
             ]),
             _: 1
           }, 8, ["disabled"])
@@ -6387,9 +6408,9 @@ const _sfc_main$b = /* @__PURE__ */ defineComponent({
           }, {
             default: withCtx(() => [
               createVNode(_sfc_main$c, {
-                name: "ChevronRight",
+                name: unref(headerNextButtonIcon),
                 size: "24"
-              })
+              }, null, 8, ["name"])
             ]),
             _: 1
           }, 8, ["disabled"])
@@ -6461,13 +6482,33 @@ const _hoisted_5$2 = ["data-id", "aria-label", "disabled", "onClick", "onKeydown
 const _sfc_main$a = /* @__PURE__ */ defineComponent({
   __name: "CalendarNav",
   setup(__props) {
-    const { masks: masks2, move } = useCalendar();
+    const { masks: masks2, move, locale } = useCalendar();
     const { page, getMonthItems, getYearItems } = usePage();
     const monthMode = ref(true);
     const yearGroupCount = 12;
     const selectedYear = ref(page.value.year);
     const selectedYearGroup = ref(getYearGroupIndex(page.value.year));
     const navContainer = ref(null);
+    const headerNextButtonIcon = computed(() => {
+      switch (locale.value.id) {
+        case "he":
+          return "ChevronLeft";
+        case "ar":
+          return "ChevronLeft";
+        default:
+          return "ChevronRight";
+      }
+    });
+    const headerPrevButtonIcon = computed(() => {
+      switch (locale.value.id) {
+        case "he":
+          return "ChevronRight";
+        case "ar":
+          return "ChevronRight";
+        default:
+          return "ChevronLeft";
+      }
+    });
     function focusFirstItem() {
       setTimeout(() => {
         if (navContainer.value == null)
@@ -6618,10 +6659,10 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
             }, {
               default: withCtx(() => [
                 createVNode(_sfc_main$c, {
-                  name: "ChevronLeft",
+                  name: unref(headerPrevButtonIcon),
                   width: "22px",
                   height: "24px"
-                })
+                }, null, 8, ["name"])
               ]),
               _: 1
             }, 8, ["disabled"])
@@ -6646,10 +6687,10 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
             }, {
               default: withCtx(() => [
                 createVNode(_sfc_main$c, {
-                  name: "ChevronRight",
+                  name: unref(headerNextButtonIcon),
                   width: "22px",
                   height: "24px"
-                })
+                }, null, 8, ["name"])
               ]),
               _: 1
             }, 8, ["disabled"])
